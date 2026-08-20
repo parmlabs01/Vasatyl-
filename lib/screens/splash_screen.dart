@@ -141,23 +141,23 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Opacity(
-                            opacity: 0.75,
+                            opacity: 0.7,
                             child: Text(
                               'from',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.85),
-                                fontSize: 16,
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                letterSpacing: 0.6,
+                                letterSpacing: 0.5,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 6),
                           Opacity(
-                            opacity: 0.95,
+                            opacity: 0.9,
                             child: Image.asset(
                               'assets/images/parm_logo.png',
-                              height: 56,
+                              height: 26,
                               fit: BoxFit.contain,
                               color: Colors.white,
                             ),
