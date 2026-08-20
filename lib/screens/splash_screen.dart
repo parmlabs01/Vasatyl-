@@ -63,82 +63,106 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, _) {
-            return Column(
+            return Stack(
               children: [
-                Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // The animated "screenplay": a global network forming into a rotating globe.
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: _GlobeNetworkPainter(
-                            formation: _formation.value,
-                            rotation: _controller.value * math.pi * 0.9,
-                            fade: 1.0 - _logoFade.value * 0.55,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          FadeTransition(
-                            opacity: _logoFade,
-                            child: ScaleTransition(
-                              scale: _logoScale,
-                              child: SizedBox(
-                                width: 96,
-                                height: 96,
-                                child: Image.asset(
-                                  'assets/images/vasatyl_logo.png',
-                                  fit: BoxFit.contain,
-                                ),
+                // The animated "screenplay": a global network forming into a rotating globe.
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _GlobeNetworkPainter(
+                      formation: _formation.value,
+                      rotation: _controller.value * math.pi * 0.9,
+                      fade: 1.0 - _logoFade.value * 0.55,
+                    ),
+                  ),
+                ),
+                // Logo + tagline, truly centered in the full screen.
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FadeTransition(
+                          opacity: _logoFade,
+                          child: ScaleTransition(
+                            scale: _logoScale,
+                            child: SizedBox(
+                              width: 96,
+                              height: 96,
+                              child: Image.asset(
+                                'assets/images/vasatyl_logo.png',
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 28),
-                          FadeTransition(
-                            opacity: _line1Fade,
-                            child: const Text(
-                              'One Big World.',
+                        ),
+                        const SizedBox(height: 28),
+                        FadeTransition(
+                          opacity: _line1Fade,
+                          child: const Text(
+                            'One Big World.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        FadeTransition(
+                          opacity: _line2Fade,
+                          child: const Text(
+                            "Let's Get You Connected.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // Parm mark, anchored to the bottom — shown only here, with a small
+                // "from" label above it, matching how Meta labels its own apps.
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 26),
+                    child: FadeTransition(
+                      opacity: _parmFade,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Opacity(
+                            opacity: 0.7,
+                            child: Text(
+                              'from',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.3,
+                                color: Colors.white.withOpacity(0.85),
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.4,
                               ),
                             ),
                           ),
                           const SizedBox(height: 6),
-                          FadeTransition(
-                            opacity: _line2Fade,
-                            child: const Text(
-                              "Let's Get You Connected.",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.3,
-                              ),
+                          Opacity(
+                            opacity: 0.9,
+                            child: Image.asset(
+                              'assets/images/parm_logo.png',
+                              height: 48,
+                              fit: BoxFit.contain,
+                              color: Colors.white,
                             ),
                           ),
                         ],
-                      ),
-                    ],
-                  ),
-                ),
-                // Parm mark — shown only here, sized and placed subtly like a platform byline.
-                FadeTransition(
-                  opacity: _parmFade,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 26),
-                    child: Opacity(
-                      opacity: 0.9,
-                      child: Image.asset(
-                        'assets/images/parm_logo.png',
-                        height: 32,
-                        fit: BoxFit.contain,
-                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -174,7 +198,7 @@ class _GlobeNetworkPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height * 0.42);
+    final center = Offset(size.width / 2, size.height / 2 - 60);
     final globeRadius = math.min(size.width, size.height) * 0.20;
 
     final dotPaint = Paint()..color = Colors.white.withOpacity(0.75 * fade);
