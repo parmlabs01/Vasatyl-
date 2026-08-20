@@ -58,7 +58,7 @@ class _RootShellState extends State<RootShell> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _navItem(icon: Icons.map_outlined, label: 'Map', idx: 1),
+              _navItem(icon: Icons.location_on_outlined, label: 'Map', idx: 1),
               _navItem(icon: Icons.chat_bubble_outline, label: 'Chat', idx: 2),
               _navItem(icon: Icons.public, label: 'Hub', idx: 3),
               const SizedBox(width: 40), // notch space for FAB
