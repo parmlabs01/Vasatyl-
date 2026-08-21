@@ -19,7 +19,6 @@ pubspec.lock
 # Platform build artifacts (regenerate with `flutter create .`)
 android/
 ios/
-web/
 linux/
 macos/
 windows/
