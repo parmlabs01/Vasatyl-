@@ -26,6 +26,9 @@ jobs:
       - name: Get packages
         run: flutter pub get
 
+      - name: Generate the Vasatyl launcher icons
+        run: dart run flutter_launcher_icons
+
       - name: Build release APK
         run: flutter build apk --release
 
